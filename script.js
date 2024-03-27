@@ -16,9 +16,9 @@ function tossCoin() {
     } else {
         playerTurn = false;
         document.getElementById('game-actions').style.display = 'block';
-        document.getElementById('attack-btn').disabled = true;
+        document.getElementById('attack-btn').disabled = false;
         document.getElementById('defend-btn').disabled = false; 
-        document.getElementById('game-results').textContent = `Coin is ${result}. You chose ${selectedOption}. You will defend.`;
+        document.getElementById('game-results').textContent = `Coin is ${result}. You chose ${selectedOption}.`;
     }
 }
 
