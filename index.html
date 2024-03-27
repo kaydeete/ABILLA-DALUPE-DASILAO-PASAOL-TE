@@ -1,40 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS3 3rd Quarter Project</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coin Toss Game</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-    <div class="container">
-        <h1>Coin Toss Game</h1>
-        <div id="health-status">
-            <p>Player Health: <span id="phealth">100</span></p>
-            <p>Opponent Health: <span id="ohealth">100</span></p>
-        </div>
-        <div id="coin-toss">
-            <h2>Toss the Coin</h2>
-            <div class="dropdown">
-                <button class="dropbtn">Head</button>
-                <div class="dropdown-content">
-                    <button onclick="tossCoin('head')">Head</button>
-                    <button onclick="tossCoin('tail')">Tail</button>
-                </div>
-              </div>
-        </div>
-        <div id="game-actions" style="display:none;">
-            <h2>Game Actions</h2>
-            <button id="attackbutton" onclick="playerAttack()">Attack</button>
-            <button id="defendbutton" onclick="playerDefend()">Defend</button>
-        </div>
-        <div id="game-results"></div>
-        <button id="resetbutton" onclick="resetGame()">Reset</button>
+<div class="container">
+    <h1>Coin Toss Game</h1>
+    <div id="health-status">
+        <p>Player Health: <span id="player-health">100</span></p>
+        <p>Opponent Health: <span id="opponent-health">100</span></p>
     </div>
-    
-
-    <script src="script.js"></script>
-
+    <div id="coin-toss">
+        <h2>Toss the Coin</h2>
+        <button onclick="tossCoin('head')">Head</button>
+        <button onclick="tossCoin('tail')">Tail</button>
+    </div>
+    <div id="game-actions" style="display:none;">
+        <h2>Game Actions</h2>
+        <button id="attack-btn" onclick="playerAttack()">Attack</button>
+        <button id="defend-btn" onclick="playerDefend()">Defend</button>
+    </div>
+    <div id="game-results"></div>
+    <button id="reset-btn" onclick="resetGame()" disabled>Reset</button>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
+
