@@ -96,10 +96,10 @@ playerDefend();
 
 function checkHealth() {
     if (playerHealth <= 0) {
-        document.getElementById('game-results').textContent = 'Player wins. Game over!';
+        document.getElementById('game-results').textContent = 'Opponent wins. Game over!';
         disableButtons();
     } else if (opponentHealth <= 0) {
-        document.getElementById('game-results').textContent = 'Opponent wins. Game over!';
+        document.getElementById('game-results').textContent = 'Player wins. Game over!';
         disableButtons();
     }
 }
