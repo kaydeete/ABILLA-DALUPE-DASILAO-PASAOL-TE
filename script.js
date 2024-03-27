@@ -29,6 +29,14 @@ function opponentAction() {
     return Math.random() < 0.5 ? 'attack' : 'defend';
 }
 
+function playerAction(action) {
+    if (action === 'attack') {
+        document.getElementById('game-results').textContent = 'You will attack.';
+    } else if (action === 'defend') {
+        document.getElementById('game-results').textContent = 'You will defend.';
+    }
+}
+
 function playerAttack() {
     const damage = calculateDamage();
     opponentHealth -= damage;
