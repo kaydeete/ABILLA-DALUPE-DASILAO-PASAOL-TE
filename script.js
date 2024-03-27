@@ -7,6 +7,7 @@ function calculateDamage() {
 }
 
 function tossCoin() {
+    document.getElementById('reset-btn').disabled = false; 
     const selectedOption = document.getElementById('coin-dropdown').value;
     const result = Math.random() < 0.5 ? 'head' : 'tail';
 
@@ -20,7 +21,7 @@ function tossCoin() {
         playerTurn = false;
         document.getElementById('game-actions').style.display = 'block';
         document.getElementById('attack-btn').disabled = true;
-        document.getElementById('defend-btn').disabled = false;
+        document.getElementById('defend-btn').disabled = false; 
         document.getElementById('game-results').textContent = `Coin is ${result}. You chose ${selectedOption}. You will defend.`;
     }
 }
@@ -61,21 +62,31 @@ function playerAction(action) {
         document.getElementById('player-health').textContent = playerHealth;
         document.getElementById('game-results').textContent += ` Opponent inflicts ${damage} damage.`;
     }
-
     checkHealth();
 }
 
 function playerDefend() {
-    const opponentDamage = 1;
-    if (opponentDamage > 3) {
-        opponentDamage = 3;
-    }
-    playerHealth -= opponentDamage;
-    if (opponentDamage === 0) {
-        document.getElementById('result').innerText = `You completely blocked the opponent.`;
+    let opponentDamage = 1; // Assume opponent always inflicts 1 damage when attacking
+
+    // Check if player successfully blocks opponent's attack
+    const playerBlocked = Math.random() < 0.5;
+
+    if (playerBlocked) {
+        document.getElementById('game-results').textContent = `You completely blocked the opponent.`;
     } else {
-        document.getElementById('result').innerText = `Opponent inflicts ${opponentDamage} damage.`;
+        // Check if opponent is also defending
+        const opponentDefending = Math.random() < 0.5;
+
+        if (opponentDefending) {
+            document.getElementById('game-results').textContent = `The opponent defended too.`;
+        }
+        else {
+            document.getElementById('game-results').textContent = `Opponent inflicts ${opponentDamage} damage.`;
+            playerHealth -= opponentDamage;
+            document.getElementById('player-health').textContent = playerHealth;
+        }
     }
+
     checkHealth();
     isPlayerTurn = true;
     document.getElementById('attack-btn').disabled = false;
@@ -99,7 +110,7 @@ function disableButtons() {
     document.getElementById('reset-btn').disabled = false;
 }
 
-function resetGame() {
+function resetBtn() {
     playerHealth = 100;
     opponentHealth = 100;
     document.getElementById('player-health').textContent = playerHealth;
