@@ -2,10 +2,6 @@ let playerHealth = 100;
 let opponentHealth = 100;
 let playerTurn = false;
 
-function calculateDamage() {
-    return Math.floor(Math.random() * 5) + 1;
-}
-
 function tossCoin() {
     document.getElementById('reset-btn').disabled = false; 
     const selectedOption = document.getElementById('coin-dropdown').value;
@@ -24,6 +20,10 @@ function tossCoin() {
         document.getElementById('defend-btn').disabled = false; 
         document.getElementById('game-results').textContent = `Coin is ${result}. You chose ${selectedOption}. You will defend.`;
     }
+}
+
+function calculateDamage() {
+    return Math.floor(Math.random() * 5) + 1;
 }
 
 function opponentAction() {

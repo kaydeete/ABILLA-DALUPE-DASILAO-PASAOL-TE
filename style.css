@@ -1,13 +1,17 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
+}
+
+h1 {
+  color: orange;
 }
 
 .container {
   margin: 0 auto;
   max-width: 600px;
   padding: 20px;
-  border: 2px solid #333;
+  border: 2px solid #cb3939;
   border-radius: 5px;
 }
 
