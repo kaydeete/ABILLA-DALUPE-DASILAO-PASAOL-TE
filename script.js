@@ -2,82 +2,109 @@ let playerHealth = 100;
 let opponentHealth = 100;
 let playerTurn = false;
 
-function tossCoin(playerChoice) {
-    const result = Math.random() < 0.5 ? 'head' : 'tail';
-    const message = `Coin is ${result}. You chose ${playerChoice}!`;
-
-    if (playerChoice === result) {
-        playerTurn = true;
-        document.getElementById('game-actions').style.display = 'block';
-        document.getElementById('attack-btn').disabled = false;
-        document.getElementById('defend-btn').disabled = true;
-    } else {
-        playerTurn = false;
-        document.getElementById('game-actions').style.display = 'block';
-        document.getElementById('attack-btn').disabled = false;
-        document.getElementById('defend-btn').disabled = false;
-    }
-
-    alert(message);
-}
-
 function calculateDamage() {
     return Math.floor(Math.random() * 5) + 1;
 }
 
+function tossCoin() {
+    const selectedOption = document.getElementById('coin-dropdown').value;
+    const result = Math.random() < 0.5 ? 'head' : 'tail';
+
+    if (selectedOption === result) {
+        playerTurn = true;
+        document.getElementById('game-actions').style.display = 'block';
+        document.getElementById('attack-btn').disabled = false;
+        document.getElementById('defend-btn').disabled = true;
+        document.getElementById('game-results').textContent = `Coin is ${result}. You chose ${selectedOption}! `;
+    } else {
+        playerTurn = false;
+        document.getElementById('game-actions').style.display = 'block';
+        document.getElementById('attack-btn').disabled = true;
+        document.getElementById('defend-btn').disabled = false;
+        document.getElementById('game-results').textContent = `Coin is ${result}. You chose ${selectedOption}. You will defend.`;
+    }
+}
+
 function opponentAction() {
-    return Math.random() < 0.5 ? 'attack' : 'defend';
+    const isAttack = Math.random() < 0.5;
+    if (isAttack) {
+        const playerDamage = calculateDamage();
+        if (playerDamage === 0) {
+            document.getElementById('game-results').textContent = 'The opponent completely blocked the attack!';
+            return 'defend';
+        } else {
+            opponentHealth -= playerDamage;
+            document.getElementById('opponent-health').textContent = opponentHealth;
+            return 'attack';
+        }
+    } else {
+        return 'defend';
+    }
+    //return Math.random() < 0.5 ? 'attack' : 'defend';
 }
 
 function playerAction(action) {
-    if (action === 'attack') {
-        document.getElementById('game-results').textContent = 'You will attack.';
-    } else if (action === 'defend') {
-        document.getElementById('game-results').textContent = 'You will defend.';
-    }
-}
 
-function playerAttack() {
-    const damage = calculateDamage();
-    opponentHealth -= damage;
-    document.getElementById('opponent-health').textContent = opponentHealth;
-    document.getElementById('game-results').textContent = `You inflict ${damage} damage.`;
+    document.getElementById('attack-btn').disabled = false;
+    document.getElementById('defend-btn').disabled = false;
+
+    if (action === 'attack') {
+        document.getElementById('game-results').textContent = 'You will attack. You attack!';
+        const damage = calculateDamage();
+        opponentHealth -= damage;
+        document.getElementById('opponent-health').textContent = opponentHealth;
+        document.getElementById('game-results').textContent += ` You inflict ${damage} damage.`;
+    } else if (action === 'defend') {
+        document.getElementById('game-results').textContent = 'You defend!';
+        const damage = calculateDamage();
+        playerHealth -= damage;
+        document.getElementById('player-health').textContent = playerHealth;
+        document.getElementById('game-results').textContent += ` Opponent inflicts ${damage} damage.`;
+    }
+
     checkHealth();
-    toggleButtons();
 }
 
 function playerDefend() {
-    const damage = calculateDamage();
-    playerHealth -= damage;
-    document.getElementById('player-health').textContent = playerHealth;
-    document.getElementById('game-results').textContent = `Opponent inflicts ${damage} damage.`;
+    const opponentDamage = 1;
+    if (opponentDamage > 3) {
+        opponentDamage = 3;
+    }
+    playerHealth -= opponentDamage;
+    if (opponentDamage === 0) {
+        document.getElementById('result').innerText = `You completely blocked the opponent.`;
+    } else {
+        document.getElementById('result').innerText = `Opponent inflicts ${opponentDamage} damage.`;
+    }
     checkHealth();
-    toggleButtons();
+    isPlayerTurn = true;
+    document.getElementById('attack-btn').disabled = false;
+    document.getElementById('defend-btn').disabled = false;
 }
+playerDefend();
 
 function checkHealth() {
     if (playerHealth <= 0) {
-        document.getElementById('game-results').textContent = 'Opponent wins.';
-        toggleButtons();
+        document.getElementById('game-results').textContent = 'Player wins. Game over!';
+        disableButtons();
     } else if (opponentHealth <= 0) {
-        document.getElementById('game-results').textContent = 'Player wins.';
-        toggleButtons();
+        document.getElementById('game-results').textContent = 'Opponent wins. Game over!';
+        disableButtons();
     }
 }
 
-function toggleButtons() {
-    document.getElementById('attack-btn').disabled = !document.getElementById('attack-btn').disabled;
-    document.getElementById('defend-btn').disabled = !document.getElementById('defend-btn').disabled;
-    document.getElementById('reset-btn').disabled = !document.getElementById('reset-btn').disabled;
+function disableButtons() {
+    document.getElementById('attack-btn').disabled = true;
+    document.getElementById('defend-btn').disabled = true;
+    document.getElementById('reset-btn').disabled = false;
 }
 
 function resetGame() {
     playerHealth = 100;
     opponentHealth = 100;
-    playerTurn = false;
     document.getElementById('player-health').textContent = playerHealth;
     document.getElementById('opponent-health').textContent = opponentHealth;
-    document.getElementById('game-results').textContent = '';
     document.getElementById('game-actions').style.display = 'none';
+    document.getElementById('game-results').textContent = '';
     document.getElementById('reset-btn').disabled = true;
 }

@@ -3,28 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Punching Game</title>
-<link rel="stylesheet" href="style.css">
+<title>Coin Toss Game</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-    <h1>Punching Game</h1>
+    <h1>Coin Toss Game</h1>
     <div id="health-status">
         <p>Player Health: <span id="player-health">100</span></p>
         <p>Opponent Health: <span id="opponent-health">100</span></p>
     </div>
     <div id="coin-toss">
         <h2>Toss the Coin</h2>
-        <button onclick="tossCoin('head')">Head</button>
-        <button onclick="tossCoin('tail')">Tail</button>
+        <select id="coin-dropdown">
+            <option value="head">Head</option>
+            <option value="tail">Tail</option>
+        </select>
+        <button onclick="tossCoin()">Toss Coin</button>
     </div>
     <div id="game-actions" style="display:none;">
         <h2>Game Actions</h2>
-        <button id="attack-btn" onclick="playerAttack('attack')">Attack</button>
-        <button id="defend-btn" onclick="playerDefend('defend')">Defend</button>
+        <button id="attack-btn" onclick="playerAction('attack')">Attack</button>
+        <button id="defend-btn" onclick="playerAction('defend')">Defend</button>
     </div>
     <div id="game-results"></div>
-    <button id="reset-btn" onclick="resetGame()" disabled>Reset</button>
+    <button id="reset-btn" onclick="resetGame()">Reset</button>
 </div>
 <script src="script.js"></script>
 </body>
