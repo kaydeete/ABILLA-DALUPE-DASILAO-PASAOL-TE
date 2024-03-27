@@ -26,7 +26,7 @@ function calculateDamage() {
     return Math.floor(Math.random() * 5) + 1;
 }
 
-/*function opponentAction() {
+function opponentAction() {
     const isAttack = Math.random() < 0.5;
     if (isAttack) {
         const playerDamage = calculateDamage();
@@ -42,9 +42,9 @@ function calculateDamage() {
         return 'defend';
     }
     //return Math.random() < 0.5 ? 'attack' : 'defend';
-} */
+}
 
-function opponentAction() {
+/*function opponentAction() {
     var oppAttack = math.random();
     var playerAttack = calculateDamage();
 
@@ -59,9 +59,9 @@ function opponentAction() {
             return 'defend';
         }
     }
-}
+}*/
 
-function playerAction(action) {
+function playerAttack(action) {
 
     document.getElementById('attack-btn').disabled = false;
     document.getElementById('defend-btn').disabled = false;
