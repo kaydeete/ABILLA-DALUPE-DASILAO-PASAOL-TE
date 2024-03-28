@@ -31,27 +31,42 @@ function calculateDamage() {
 function opponentAction()
 {
     var oppAD = Math.random();
-
-    if (oppAD == 0)
+    switch(oppAD)
     {
-        opponentDefend();
-    }
-    else {
-        opponentAttack();
+        case 0:
+            var odmg = calculateDamage();
+            document.getElementById('game-results').innetHTML = "Opponent inflicts " + ${odmg} + " damage.";
+
+            if (odmg <=3 )
+            {
+                document.getElementById('game-results').innerHTML = 'You have completely blocked the opponent.';
+            }
+            else
+            {
+                document.getElementById('game-results').innerHTML = "You both attack each other.";
+            }
+            break;
+        case 1:
+            var pdmg = calculateDamage();
+            if (pdmg <=3)
+            {
+                document.getElementById('game-results').innerHTML = "Opponent completely blocked the attack!";
+            }
+            break;
     }
 }
-
 function playerAction(action)
 {
-    if (action == 'attack') {
-        playerAttack();
-        document.getElementById('game-results').innerHTML = 'You will attack.';
+    switch(action)
+    {
+        case 'attack':
+            playerAttack();
+            document.getElementById('game-results').innerHTML = "You will attack.";
+            break;
+        case 'defend':
+            playerDefend()
+            document.getElementById('game-results').innerHTML = 'You will defend.';
     }
-    else {
-        playerDefend();
-        document.getElementById('game-results').innerHTML = 'You will defend.';
-    }
-
 }
 
 function playerAttack()
