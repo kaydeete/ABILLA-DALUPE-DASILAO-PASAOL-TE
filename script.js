@@ -124,6 +124,6 @@ function resetBtn() {
     document.getElementById('game-results').innerHTML = '';
     document.getElementById('choice').innerHTML = '';
     document.getElementById('reset-btn').disabled = true;
-    document.getElementById('atk').disabled = false;
-    document.getElementById('def').disabled = false;
+    document.getElementById('atk').disabled = true;
+    document.getElementById('def').disabled = true;
 }
