@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-    <h1>"*•.¸♡ Punching Game ♡¸.•*"</h1>
-    <div id="health-status">
-        <p>Player Health: <span id="player-health">100</span></p>
+<div class="container">  <!-- Container for the entire game -->
+    <h1>"•.¸♡ Punching Game ♡¸.•"</h1>  <!-- This is the game title -->
+    <div id="health-status"> <!-- This is for health status display -->
+        <p>Player Health: <span id="player-health">100</span></p> 
         <p>Opponent Health: <span id="opponent-health">100</span></p>
     </div>
-    <div id="coin-toss">
+    <div id="coin-toss">   <!-- This is for the coin toss section-->
         <p>─── ⋆⋅☆⋅⋆ ───</p>
         <h2>｡❀Coin Toss✿</h2>
         <select id="coin-dropdown">
@@ -22,15 +22,15 @@
         </select>
         <button onclick="tossCoin()">Click Me!</button>
     </div>
-    <div id="game-actions">
+    <div id="game-actions"> <!-- This is for the game actions section -->
         <p>─── ⋆⋅☆⋅⋆ ───</p>
         <h2>Game Actions</h2>
         <button id="atk" onclick="playerAttack()" disabled>Attack</button>
         <button id="def" onclick="playerDefend()" disabled>Defend</button>
     </div>
-    <div id="choice"></div>
+    <div id="choice"></div> <!-- Placeholder for additional game elements -->
     <div id="game-results"></div>
-    <button id="reset-btn" onclick="resetBtn()" disabled>Reset</button>
+    <button id="reset-btn" onclick="resetBtn()" disabled>Reset</button>  <!-- Reset button -->
 </div>
 <script src="script.js"></script>
 </body>
