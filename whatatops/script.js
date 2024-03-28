@@ -4,6 +4,7 @@ var result;
 var playerOpt;
 var oAD;
 var playerTurn = 0;
+var dmg;
 
 function tossCoin()
 {
@@ -39,13 +40,13 @@ function calculateDamage()
 
 function opponentAction()
 {
-    return oAD = Math.random() < 0.5 ? 'atk' : 'def';   
+    return oAD = Math.random() < 0.5 ? 'atk' : 'def'; 
 }
 
 function playerAttack(playerTurn)
 {
     allow();
-    const dmg = calculateDamage();
+    dmg = calculateDamage();
     if (playerTurn == 1)
     {
         document.getElementById('choice').innerHTML = "You attacked!";
@@ -61,11 +62,11 @@ function playerAttack(playerTurn)
             {
                 dmg;
                 opponentHealth -= dmg;
-                const odmg = calculateDamage();
+                var odmg = calculateDamage();
                 playerHealth -= odmg;
-                document.getElementById('choice').innerHTML = "Both attacked!" + "<br>";
+                document.getElementById('choice').innerHTML = "Both attacked!" ;
                 document.getElementById('game-results').innerHTML = "You inflict " + dmg + " damage. Opponent inflict " + odmg + " damage.";
-                ocument.getElementById('opponent-health').innerHTML = opponentHealth;
+                document.getElementById('opponent-health').innerHTML = opponentHealth;
             }
             else if (oAD =='def')
             {
@@ -76,12 +77,11 @@ function playerAttack(playerTurn)
                 if (dmg == 1 || dmg ==2)
                 {
                     opponentHealth -= dmg;
-                    document.getElementById('game-results').innerHTML = "You inflict" + dmg + "damage.";
+                    document.getElementById('game-results').innerHTML = "You inflict " + dmg + " damage.";
                 }
                 else
                 {
-                    document.getElementById('game-results').innerHTML = "You inflict" + dmg + "damage.";
-                    document.getElementById('game-results').innerHTML = 'The Opponent was able to block your attack.';
+                    document.getElementById('game-results').innerHTML = "You inflict " + dmg + " damage." + "<br>" + 'The Opponent was able to block your attack.';
                 }
             }
     }
@@ -93,14 +93,16 @@ function playerDefend()
     allow();
     oAD = opponentAction();
     playerOpt = 'def';
+    document.getElementById('choice').innerHTML="";
     if (playerOpt == oAD)
     {
-        document.getElementById('game-results').innerHTML="You both defended!"
+        document.getElementById('game-results').innerHTML="You both defended!";
     }
     else if ((playerOpt == 'atk') || (oAD == 'def'))
     { 
+        dmg = calculateDamage();
         dmg -= 3;
-        document.getElementById('choice').innerHTML="The Opponent attacked."
+        document.getElementById('choice').innerHTML="The Opponent attacked.";
         if ((dmg == 1) || (dmg == 2))
         {
             playerHealth -= dmg;
@@ -115,12 +117,14 @@ function playerDefend()
 }
 
 function checkHealth() {
-    var dmg = calculateDamage();
+    dmg = calculateDamage();
     if ((playerHealth -=dmg) <= 0) {
+        document.getElementById('choice').innerHTML="";
         document.getElementById('game-results').innerHTMLt = 'Opponent wins. Game over!';
         document.getElementById('player-health').innerHTML = "0"
         disableButtons();
     } else if ((opponentHealth -= dmg) <= 0) {
+        document.getElementById('choice').innerHTML="";
         document.getElementById('game-results').innerHTML = 'Player wins. Game over!';
         document.getElementById('opponent-health').innerHTML = "0"
         disableButtons();
@@ -141,4 +145,6 @@ function resetBtn() {
     document.getElementById('game-actions').style.display = 'none';
     document.getElementById('game-results').innerHTML = '';
     document.getElementById('reset-btn').disabled = true;
+    document.getElementById('atk').disabled = false;
+    document.getElementById('def').disabled = false;
 }
