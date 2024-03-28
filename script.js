@@ -21,6 +21,7 @@ function tossCoin()
         document.getElementById('attack-btn').disabled = false;
         document.getElementById('defend-btn').disabled = false;
         document.getElementById('game-results').innerHTML = `Coin is ${result}. You chose ${playerOption}! `;
+        opponentAD();
     }
 }
 
@@ -39,11 +40,11 @@ function opponentAD() {
       const damage = calculateDamage();
       playerHealth -= damage;
       if (playerHealth < 0) playerHealth = 0;
-      document.getElementById('player-health').textContent = playerHealth;
-      document.getElementById('output').innerHTML += `<br>Opponent attacks and inflicts ${damage} damage.`;
+      document.getElementById('player-health').innerHTML = playerHealth;
+      document.getElementById('game-results').innerHTML = `<br>Opponent attacks and inflicts ${damage} damage.`;
       checkHealth();
     } else {
-      document.getElementById('output').innerHTML += `<br>Opponent defends.`;
+      document.getElementById('output').innerHTML = `<br>Opponent defends.`;
     }
 }
 
@@ -54,8 +55,8 @@ function playerAttack()
     var damage = calculateDamage();
     opponentHealth -= damage;
     if (opponentHealth < 0) opponentHealth = 0;
-    document.getElementById('opponent-health').textContent = opponentHealth;
-    document.getElementById('game-results').innerHTML += `<br>You attack and inflict ${damage} damage.`;
+    document.getElementById('opponent-health').innerHTML = opponentHealth;
+    document.getElementById('game-results').innerHTML = `<br>You attack and inflict ${damage} damage.`;
     checkHealth();
     opponentTurn();
 }
@@ -68,7 +69,7 @@ function playerDefend()
     playerHealth -= Math.min(damage, 3);
     if (playerHealth < 0) playerHealth = 0;
     document.getElementById('player-health').innerHTML = playerHealth;
-    document.getElementById('output').innerHTML += `<br>You defend and block ${Math.min(damage, 3)} damage.`;
+    document.getElementById('game-results').innerHTML = `<br>You defend and block ${Math.min(damage, 3)} damage.`;
     checkHealth();
     opponentTurn();
 }
@@ -97,7 +98,7 @@ function resetBtn() {
     opponentHealth = 100;
     document.getElementById('player-health').innerHTML = playerHealth;
     document.getElementById('opponent-health').innerHTML = opponentHealth;
-    document.getElementById('output').innerHTML = '';
+    document.getElementById('game-results').innerHTML = '';
     disableButtons();
 }
 
