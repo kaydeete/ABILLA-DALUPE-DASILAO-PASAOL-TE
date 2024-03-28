@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punching Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Punching Game</h1>
+    <div id="health-status">
+        <p>Player Health: <span id="player-health">100</span></p>
+        <p>Opponent Health: <span id="opponent-health">100</span></p>
+    </div>
+    <div id="coin-toss">
+        <h2>Coin Toss</h2>
+        <select id="coin-dropdown">
+            <option value="head">Head</option>
+            <option value="tail">Tail</option>
+        </select>
+        <button onclick="tossCoin()">Toss Coin</button>
+    </div>
+    <div id="game-actions">
+        <h2>Game Actions</h2>
+        <button id="atk" onclick="playerAttack()">Attack</button>
+        <button id="def" onclick="playerDefend()">Defend</button>
+    </div>
+    <div id="choice"></div>
+    <div id="game-results"></div>
+    <button id="reset-btn" onclick="resetBtn()" disabled>Reset</button>
+</div>
+<script src="lolz.js"></script>
+</body>
+</html>
