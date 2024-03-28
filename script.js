@@ -32,7 +32,7 @@ function calculateDamage() {
 function opponentAction()
 {
     // 0 for defense and 1 for attack
-    var oA = Math.random();
+    var oA = Math.round(Math.random());
     if (oA == 1) {return 'attack';}
     else {return 'defend';}
 }
