@@ -1,104 +1,101 @@
 let playerHealth = 100;
 let opponentHealth = 100;
-let playerTurn = false;
+let result;
+let playerOpt;
+let oAD;
+let dmg;
 
-function tossCoin()
-{
-    var playerOption = document.getElementById('coin-dropdown').value;
-    var result = Math.random() < 0.5 ? 'head' : 'tail';
-    document.getElementById('reset-btn').disabled = false; 
-    document.getElementById('attack-btn').disabled = true;
-    document.getElementById('defend-btn').disabled = true;
+function tossCoin() {
+    playerOpt = document.getElementById('coin-dropdown').value;
+    result = Math.random() < 0.5 ? 'head' : 'tail';
+    document.getElementById('reset-btn').disabled = false;
+    document.getElementById('atk').disabled = true;
+    document.getElementById('def').disabled = true;
+    document.getElementById('game-results').innerHTML = "Coin is " + result + "! You chose " + playerOpt + "!";
+    
+    if (result == playerOpt) {
+        document.getElementById('atk').disabled = false;
+        document.getElementById('def').disabled = true;
+    } else {
+        allow();
+    }
+}
 
-    if (playerOption == result) // player attacks first
-    {
-        document.getElementById('attack-btn').disabled = false;
-        document.getElementById('defend-btn').disabled = true;
-        document.getElementById('game-results').innerHTML = `Coin is ${result}. You chose ${playerOption}! `;
-    }
-    else // opponent attacks first and player has to defend 
-    {
-        document.getElementById('attack-btn').disabled = false;
-        document.getElementById('defend-btn').disabled = false;
-        document.getElementById('game-results').innerHTML = `Coin is ${result}. You chose ${playerOption}! `;
-        opponentAD();
-    }
+function allow() {
+    document.getElementById('atk').disabled = false;
+    document.getElementById('def').disabled = false;
 }
 
 function calculateDamage() {
-    return Math.floor(Math.random() * 5) + 1; // damage for attack
+    return Math.floor(Math.random() * 5) + 1;
 }
 
-function opponentAction()
-{
-    // 0 for defense and 1 for attack
-    var oA = Math.round(Math.random());
-    if (oA == 1) {return 'attack';}
-    else if (oA==0) {return 'defend';}
+function opponentAction() {
+    return Math.random() < 0.5 ? 'atk' : 'def'; 
 }
 
-function opponentAD() {
-    var action = opponentAction();
-    if (action === 'attack') {
-        const damage = calculateDamage();
-        playerHealth -= damage;
-        if (playerHealth < 0)
-        {
-            playerHealth = 0;
-            document.getElementById('player-health').innerHTML = playerHealth;
-            document.getElementById('game-results').innerHTML = `Opponent attacks and inflicts ${damage} damage.`;
-            checkHealth();
+function playerAttack(playerTurn) {
+    allow();
+    if (playerTurn == 1) {
+        document.getElementById('choice').innerHTML = "You attacked!";
+        dmg = calculateDamage();
+        opponentHealth -= dmg;
+        document.getElementById('game-results').innerHTML = "You inflict " + dmg + " damage.";
+    } else {
+        oAD = opponentAction();
+        if (oAD == 'atk') {
+            dmg = calculateDamage();
+            opponentHealth -= dmg;
+            var odmg = calculateDamage();
+            playerHealth -= odmg;
+            document.getElementById('choice').innerHTML = "Both attacked!";
+            document.getElementById('game-results').innerHTML = "You inflict " + dmg + " damage. Opponent inflicts " + odmg + " damage.";
+        } else if (oAD == 'def') {
+            dmg = calculateDamage();
+            var blockedDamage = Math.min(dmg, 3); // Maximum of 3 damage can be blocked
+            opponentHealth -= dmg - blockedDamage;
+            document.getElementById('choice').innerHTML = "The opponent defended.";
+            document.getElementById('game-results').innerHTML = "You inflict " + (dmg - blockedDamage) + " damage.";
         }
     }
-    else {
-      document.getElementById('game-results').innerHTML = `Opponent defends.`;
-    }
-}
-
-function playerAttack()
-{
-    document.getElementById('defend-btn').disabled = false; 
-    document.getElementById('attack-btn').disabled = false;
-    var damage = calculateDamage();
-    opponentHealth -= damage;
-    if (opponentHealth < 0) opponentHealth = 0;
-    document.getElementById('opponent-health').innerHTML = opponentHealth;
-    document.getElementById('game-results').innerHTML = `You attack and inflict ${damage} damage.`;
     checkHealth();
 }
 
-function playerDefend()
-{
-    document.getElementById('defend-btn').disabled = false; 
-    document.getElementById('attack-btn').disabled = false;
-    var damage = calculateDamage(); // Calculate the opponent's attack damage
-    var blockedDamage = Math.min(damage, 3); // Calculate the player's blocked damage
-    playerHealth -= (damage - blockedDamage); // Reduce the player's health by the effective damage
-    if (playerHealth < 0) playerHealth = 0;
-    document.getElementById('player-health').innerHTML = playerHealth;
-    document.getElementById('game-results').innerHTML = `You defend and block ${blockedDamage} damage.`;
-    checkHealth();
-    if (playerHealth > 0) {
-        opponentAD();
+function playerDefend() {
+    allow();
+    oAD = opponentAction();
+    playerOpt = 'def';
+    document.getElementById('choice').innerHTML = "";
+    if (playerOpt == oAD) {
+        document.getElementById('game-results').innerHTML = "You both defended!";
+    } else if ((playerOpt == 'atk') || (oAD == 'def')) {
+        dmg = calculateDamage();
+        var blockedDamage = Math.min(dmg, 3); // Maximum of 3 damage can be blocked
+        playerHealth -= dmg - blockedDamage;
+        document.getElementById('choice').innerHTML = "The Opponent attacked.";
+        document.getElementById('game-results').innerHTML = "You defend and take " + (dmg - blockedDamage) + " damage.";
     }
+    checkHealth();
 }
 
 function checkHealth() {
-    //var dmg = calculateDamage();
     if (playerHealth <= 0) {
-        document.getElementById('game-results').innerHTML= 'Opponent wins. Game over!';
-        document.getElementById('player-health').innerHTML = "0"
-        disableBtn();
+        document.getElementById('game-results').innerHTML = 'Opponent wins. Game over!';
+        document.getElementById('player-health').innerHTML = "0";
+        disableButtons();
     } else if (opponentHealth <= 0) {
         document.getElementById('game-results').innerHTML = 'Player wins. Game over!';
-        document.getElementById('opponent-health').innerHTML = "0"
-        disableBtn();
+        document.getElementById('opponent-health').innerHTML = "0";
+        disableButtons();
+    } else {
+        document.getElementById('player-health').innerHTML = playerHealth;
+        document.getElementById('opponent-health').innerHTML = opponentHealth;
     }
 }
 
-function disableBtn() {
-    document.getElementById('attack-btn').disabled = true;
-    document.getElementById('defend-btn').disabled = true;
+function disableButtons() {
+    document.getElementById('atk').disabled = true;
+    document.getElementById('def').disabled = true;
     document.getElementById('reset-btn').disabled = false;
 }
 
@@ -108,5 +105,8 @@ function resetBtn() {
     document.getElementById('player-health').innerHTML = playerHealth;
     document.getElementById('opponent-health').innerHTML = opponentHealth;
     document.getElementById('game-results').innerHTML = '';
-    disableBtn();
+    document.getElementById('choice').innerHTML = '';
+    document.getElementById('reset-btn').disabled = true;
+    document.getElementById('atk').disabled = false;
+    document.getElementById('def').disabled = false;
 }
