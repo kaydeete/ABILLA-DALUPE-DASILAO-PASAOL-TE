@@ -55,7 +55,14 @@ function playerAttack(playerTurn) {
             var blockedDamage = Math.min(dmg, 3); // Maximum of 3 damage can be blocked
             opponentHealth -= dmg - blockedDamage;
             document.getElementById('choice').innerHTML = "The opponent defended.";
+            if (((dmg-blockedDamage)==1) ||((dmg-blockedDamage)==2))
+            {
             document.getElementById('game-results').innerHTML = "You inflict " + (dmg - blockedDamage) + " damage.";
+            }
+            else
+            {
+                document.getElementById('game-results').innerHTML = "You inflict " + (dmg - blockedDamage) + " damage." + "<br>" + 'The Opponent was able to block your attack.';
+            }
         }
     }
     checkHealth();
@@ -64,16 +71,17 @@ function playerAttack(playerTurn) {
 function playerDefend() {
     allow();
     oAD = opponentAction();
-    playerOpt = 'def';
     document.getElementById('choice').innerHTML = "";
-    if (playerOpt == oAD) {
-        document.getElementById('game-results').innerHTML = "You both defended!";
-    } else if ((playerOpt == 'atk') || (oAD == 'def')) {
+    if (oAD == 'atk')
+    {
         dmg = calculateDamage();
         var blockedDamage = Math.min(dmg, 3); // Maximum of 3 damage can be blocked
         playerHealth -= dmg - blockedDamage;
         document.getElementById('choice').innerHTML = "The Opponent attacked.";
         document.getElementById('game-results').innerHTML = "You defend and take " + (dmg - blockedDamage) + " damage.";
+    }
+    else if ('def' == oAD) {
+        document.getElementById('game-results').innerHTML = "You both defended!";
     }
     checkHealth();
 }
