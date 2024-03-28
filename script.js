@@ -97,7 +97,7 @@ function disableBtn() {
     document.getElementById('reset-btn').disabled = false;
 }
 
-function resetBtn() {
+function resetGame() {
     playerHealth = 100;
     opponentHealth = 100;
     document.getElementById('player-health').innerHTML = playerHealth;
