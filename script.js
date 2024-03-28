@@ -54,7 +54,7 @@ function opponentAD() {
 
 function playerAttack()
 {
-    document.getElementById('defend-btn').disabled = true; 
+    document.getElementById('defend-btn').disabled = false; 
     document.getElementById('attack-btn').disabled = false;
     var damage = calculateDamage();
     opponentHealth -= damage;
