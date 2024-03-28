@@ -7,16 +7,16 @@ function tossCoin()
     var playerOption = document.getElementById('coin-dropdown').value;
     var result = Math.random() < 0.5 ? 'head' : 'tail';
     document.getElementById('reset-btn').disabled = false; 
-    document.getElementById('attack-btn').disabled = false;
-    document.getElementById('defend-btn').disabled = false;
+    document.getElementById('attack-btn').disabled = true;
+    document.getElementById('defend-btn').disabled = true;
 
-    if (playerOption == result)
+    if (playerOption == result) // player attacks first
     {
         document.getElementById('attack-btn').disabled = false;
         document.getElementById('defend-btn').disabled = true;
         document.getElementById('game-results').innerHTML = `Coin is ${result}. You chose ${playerOption}! `;
     }
-    else
+    else // opponent attacks first and player has to defend 
     {
         document.getElementById('attack-btn').disabled = false;
         document.getElementById('defend-btn').disabled = false;
@@ -31,7 +31,10 @@ function calculateDamage() {
 
 function opponentAction()
 {
-    return Math.random() < 0.5 ? 'attack' : 'defend';
+    // 0 for defense and 1 for attack
+    var oA = Math.random();
+    if (oA == 1) {return 'attack';}
+    else {return 'defend';}
 }
 
 function opponentAD() {
