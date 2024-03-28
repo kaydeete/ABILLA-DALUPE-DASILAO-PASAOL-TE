@@ -4,6 +4,7 @@ let result;
 let playerOpt;
 let oAD;
 let dmg;
+let action;
 
 function tossCoin() {
     playerOpt = document.getElementById('coin-dropdown').value;
@@ -71,16 +72,25 @@ function playerAttack(playerTurn) {
 function playerDefend() {
     allow();
     oAD = opponentAction();
-    playerOpt = 'def';
     document.getElementById('choice').innerHTML = "";
-    if (playerOpt == oAD) {
-        document.getElementById('game-results').innerHTML = "You both defended!";
-    } else if ((playerOpt == 'atk') || (oAD == 'def')) {
+    document.getElementById('game-results').innerHTML = "";
+    if (oAD == 'atk')
+    {
         dmg = calculateDamage();
         var blockedDamage = Math.min(dmg, 3); // Maximum of 3 damage can be blocked
         playerHealth -= dmg - blockedDamage;
         document.getElementById('choice').innerHTML = "The Opponent attacked.";
-        document.getElementById('game-results').innerHTML = "You defend and take " + (dmg - blockedDamage) + " damage.";
+        if (((dmg-blockedDamage)==1) ||((dmg-blockedDamage)==2))
+            {
+                document.getElementById('game-results').innerHTML = "You defend and take " + (dmg - blockedDamage) + " damage.";
+            }
+            else
+            {
+                document.getElementById('game-results').innerHTML = "You defend and take " + (dmg - blockedDamage) + " damage. <br>You were able to successfully block the attack.";
+            }
+    }
+    else if ('def' == oAD) {
+        document.getElementById('game-results').innerHTML = "You both defended!";
     }
     checkHealth();
 }
