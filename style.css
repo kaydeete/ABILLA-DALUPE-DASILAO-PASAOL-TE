@@ -2,6 +2,9 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
   margin-top: 70px;
+}
+
+html {
   background: url('https://i.pinimg.com/736x/d7/05/46/d7054669fb6d68c43bf672df6bfcbc10.jpg');
   background-size: 90%;
   background-position-y: 5px;
