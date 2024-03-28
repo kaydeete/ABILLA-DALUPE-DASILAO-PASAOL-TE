@@ -53,6 +53,8 @@ function playerAttack(playerTurn)
         dmg = calculateDamage();
         opponentHealth -= dmg;
         document.getElementById('game-results').innerHTML = "You inflict" + dmg + "damage.";
+        damage = dmg;
+        return damage;
     }
     else
     {
@@ -65,12 +67,13 @@ function playerAttack(playerTurn)
                 playerHealth -= odmg;
                 document.getElementById('choice').innerHTML = "Both attacked!" ;
                 document.getElementById('game-results').innerHTML = "You inflict " + dmg + " damage. Opponent inflict " + odmg + " damage.";
-                
+                document.getElementById('opponent-health').innerHTML = opponentHealth;
+                document.getElementById('player-health').innerHTML = playerHealth;
             }
             else if (oAD =='def')
             {
                 dmg = calculateDamage();
-                opponentHealth -= damage;
+                opponentHealth -= dmg;
                 document.getElementById('opponent-health').innerHTML = opponentHealth;
                 document.getElementById('choice').innerHTML = "The opponent defended.";
                 if (dmg == 1 || dmg == 2)
@@ -81,6 +84,7 @@ function playerAttack(playerTurn)
                 {
                     document.getElementById('game-results').innerHTML = "You inflict " + dmg + " damage." + "<br>" + 'The Opponent was able to block your attack.';
                 }
+                damage = dmg;
                 return damage;
             }
     }
@@ -100,7 +104,6 @@ function playerDefend()
     else if ((playerOpt == 'atk') || (oAD == 'def'))
     { 
         dmg = calculateDamage();
-        dmg = damage;
         dmg -= 3;
         document.getElementById('choice').innerHTML="The Opponent attacked.";
         if ((dmg == 1) && (dmg == 2))
@@ -112,6 +115,7 @@ function playerDefend()
         {
             document.getElementById('game-results').innerHTML="Tuluyan mo itong nadepensahan! CONGRATS!";
         }
+        damage = dmg;
         return damage;
     }
     checkHealth();
