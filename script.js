@@ -37,14 +37,18 @@ function opponentAction()
 function opponentAD() {
     var action = opponentAction();
     if (action === 'attack') {
-      const damage = calculateDamage();
-      playerHealth -= damage;
-      if (playerHealth < 0) playerHealth = 0;
-      document.getElementById('player-health').innerHTML = playerHealth;
-      document.getElementById('game-results').innerHTML = `<br>Opponent attacks and inflicts ${damage} damage.`;
-      checkHealth();
-    } else {
-      document.getElementById('output').innerHTML = `<br>Opponent defends.`;
+        const damage = calculateDamage();
+        playerHealth -= damage;
+        if (playerHealth < 0)
+        {
+            playerHealth = 0;
+            document.getElementById('player-health').innerHTML = playerHealth;
+            document.getElementById('game-results').innerHTML = `Opponent attacks and inflicts ${damage} damage.`;
+            checkHealth();
+        }
+    }
+    else {
+      document.getElementById('game-results').innerHTML = `Opponent defends.`;
     }
 }
 
@@ -56,9 +60,9 @@ function playerAttack()
     opponentHealth -= damage;
     if (opponentHealth < 0) opponentHealth = 0;
     document.getElementById('opponent-health').innerHTML = opponentHealth;
-    document.getElementById('game-results').innerHTML = `<br>You attack and inflict ${damage} damage.`;
+    document.getElementById('game-results').innerHTML = `You attack and inflict ${damage} damage.`;
     checkHealth();
-    opponentTurn();
+    opponentAD();
 }
 
 function playerDefend()
@@ -69,9 +73,9 @@ function playerDefend()
     playerHealth -= Math.min(damage, 3);
     if (playerHealth < 0) playerHealth = 0;
     document.getElementById('player-health').innerHTML = playerHealth;
-    document.getElementById('game-results').innerHTML = `<br>You defend and block ${Math.min(damage, 3)} damage.`;
+    document.getElementById('game-results').innerHTML = `You defend and block ${Math.min(damage, 3)} damage.`;
     checkHealth();
-    opponentTurn();
+    opponentAD();
 }
 
 function checkHealth() {
@@ -87,7 +91,7 @@ function checkHealth() {
     }
 }
 
-function disableButtons() {
+function disableBtn() {
     document.getElementById('attack-btn').disabled = true;
     document.getElementById('defend-btn').disabled = true;
     document.getElementById('reset-btn').disabled = false;
@@ -99,14 +103,5 @@ function resetBtn() {
     document.getElementById('player-health').innerHTML = playerHealth;
     document.getElementById('opponent-health').innerHTML = opponentHealth;
     document.getElementById('game-results').innerHTML = '';
-    disableButtons();
-}
-
-function disableBtn() {
-    const attackBtn = document.getElementById('attack-btn');
-    const defendBtn = document.getElementById('defend-btn');
-    const resetBtn = document.getElementById('reset-btn');
-    attackBtn.disabled = true;
-    defendBtn.disabled = true;
-    resetBtn.disabled = false;
+    disableBtn();
 }
