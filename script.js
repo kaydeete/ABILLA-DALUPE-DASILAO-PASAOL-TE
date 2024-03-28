@@ -4,6 +4,7 @@ let result;
 let playerOpt;
 let oAD;
 let dmg;
+let action;
 
 function tossCoin() {
     playerOpt = document.getElementById('coin-dropdown').value;
@@ -72,13 +73,21 @@ function playerDefend() {
     allow();
     oAD = opponentAction();
     document.getElementById('choice').innerHTML = "";
+    document.getElementById('game-results').innerHTML = "";
     if (oAD == 'atk')
     {
         dmg = calculateDamage();
         var blockedDamage = Math.min(dmg, 3); // Maximum of 3 damage can be blocked
         playerHealth -= dmg - blockedDamage;
         document.getElementById('choice').innerHTML = "The Opponent attacked.";
-        document.getElementById('game-results').innerHTML = "You defend and take " + (dmg - blockedDamage) + " damage.";
+        if (((dmg-blockedDamage)==1) ||((dmg-blockedDamage)==2))
+            {
+                document.getElementById('game-results').innerHTML = "You defend and take " + (dmg - blockedDamage) + " damage.";
+            }
+            else
+            {
+                document.getElementById('game-results').innerHTML = "You defend and take " + (dmg - blockedDamage) + " damage. <br>You were able to successfully block the attack.";
+            }
     }
     else if ('def' == oAD) {
         document.getElementById('game-results').innerHTML = "You both defended!";
@@ -88,11 +97,11 @@ function playerDefend() {
 
 function checkHealth() {
     if (playerHealth <= 0) {
-        document.getElementById('game-results').innerHTML = 'Opponent wins. Game over!';
+        document.getElementById('game-results').innerHTML = 'Opponent wins. Game over! Might as well coquitte.';
         document.getElementById('player-health').innerHTML = "0";
         disableButtons();
     } else if (opponentHealth <= 0) {
-        document.getElementById('game-results').innerHTML = 'Player wins. Game over!';
+        document.getElementById('game-results').innerHTML = 'Player wins. Game over! How many letters on coquette? 8 yum yum!';
         document.getElementById('opponent-health').innerHTML = "0";
         disableButtons();
     } else {
