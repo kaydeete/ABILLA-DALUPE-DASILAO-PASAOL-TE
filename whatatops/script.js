@@ -97,11 +97,11 @@ function playerDefend() {
 
 function checkHealth() {
     if (playerHealth <= 0) {
-        document.getElementById('game-results').innerHTML = 'Opponent wins. Game over!';
+        document.getElementById('game-results').innerHTML = 'Opponent wins. Game over! Might as well coquitte.';
         document.getElementById('player-health').innerHTML = "0";
         disableButtons();
     } else if (opponentHealth <= 0) {
-        document.getElementById('game-results').innerHTML = 'Player wins. Game over!';
+        document.getElementById('game-results').innerHTML = 'Player wins. Game over! How many letters on coquette? 8 yum yum!';
         document.getElementById('opponent-health').innerHTML = "0";
         disableButtons();
     } else {
