@@ -34,7 +34,7 @@ function opponentAction()
     // 0 for defense and 1 for attack
     var oA = Math.round(Math.random());
     if (oA == 1) {return 'attack';}
-    else {return 'defend';}
+    else if (oA==0) {return 'defend';}
 }
 
 function opponentAD() {
@@ -65,20 +65,22 @@ function playerAttack()
     document.getElementById('opponent-health').innerHTML = opponentHealth;
     document.getElementById('game-results').innerHTML = `You attack and inflict ${damage} damage.`;
     checkHealth();
-    opponentAD();
 }
 
 function playerDefend()
 {
     document.getElementById('defend-btn').disabled = false; 
     document.getElementById('attack-btn').disabled = false;
-    var damage = calculateDamage();
-    playerHealth -= Math.min(damage, 3);
+    var damage = calculateDamage(); // Calculate the opponent's attack damage
+    var blockedDamage = Math.min(damage, 3); // Calculate the player's blocked damage
+    playerHealth -= (damage - blockedDamage); // Reduce the player's health by the effective damage
     if (playerHealth < 0) playerHealth = 0;
     document.getElementById('player-health').innerHTML = playerHealth;
-    document.getElementById('game-results').innerHTML = `You defend and block ${Math.min(damage, 3)} damage.`;
+    document.getElementById('game-results').innerHTML = `You defend and block ${blockedDamage} damage.`;
     checkHealth();
-    opponentAD();
+    if (playerHealth > 0) {
+        opponentAD();
+    }
 }
 
 function checkHealth() {
