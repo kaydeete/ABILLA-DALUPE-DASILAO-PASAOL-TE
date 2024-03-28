@@ -1,17 +1,21 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
+  margin-top: 70px;
+  background: url('https://i.pinimg.com/736x/d7/05/46/d7054669fb6d68c43bf672df6bfcbc10.jpg');
+  background-size: 100%;
+  background-position: center;
 }
 
-h1 {
-  color: orange;
+h1, h2{
+  color: hotpink;
 }
 
 .container {
   margin: 0 auto;
   max-width: 600px;
   padding: 20px;
-  border: 2px solid #cb3939;
+  border: 2px solid hotpink;
   border-radius: 5px;
 }
 
@@ -20,7 +24,7 @@ button {
   margin: 5px;
   font-size: 16px;
   cursor: pointer;
-  background-color: orange;
+  background-color: pink;
   border-radius: 5px;
 }
 
@@ -28,3 +32,5 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+option {background-color: palevioletred;}
