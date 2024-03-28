@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coin Toss Game</title>
+<title>Punching Game</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,17 +14,17 @@
         <p>Opponent Health: <span id="opponent-health">100</span></p>
     </div>
     <div id="coin-toss">
-        <h2>Toss the Coin</h2>
+        <h2>Coin Toss</h2>
         <select id="coin-dropdown">
             <option value="head">Head</option>
             <option value="tail">Tail</option>
         </select>
         <button onclick="tossCoin()">Toss Coin</button>
     </div>
-    <div id="game-actions" style="display:none;">
+    <div id="game-actions">
         <h2>Game Actions</h2>
-        <button id="attack-btn" onclick="playerAction('attack')">Attack</button>
-        <button id="defend-btn" onclick="playerAction('defend')">Defend</button>
+        <button id="attack-btn" onclick="playerAction('attack')" disabled>Attack</button>
+        <button id="defend-btn" onclick="playerAction('defend')" disabled>Defend</button>
     </div>
     <div id="game-results"></div>
     <button id="reset-btn" onclick="resetBtn()" disabled>Reset</button>

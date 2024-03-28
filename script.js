@@ -2,114 +2,110 @@ let playerHealth = 100;
 let opponentHealth = 100;
 let playerTurn = false;
 
-function tossCoin() {
+function tossCoin()
+{
+    var playerOption = document.getElementById('coin-dropdown').value;
+    var result = Math.random() < 0.5 ? 'head' : 'tail';
     document.getElementById('reset-btn').disabled = false; 
-    const selectedOption = document.getElementById('coin-dropdown').value;
-    const result = Math.random() < 0.5 ? 'head' : 'tail';
+    document.getElementById('attack-btn').disabled = false;
+    document.getElementById('defend-btn').disabled = false;
 
-    if (selectedOption === result) {
-        playerTurn = true;
-        document.getElementById('game-actions').style.display = 'block';
+    if (playerOption == result)
+    {
         document.getElementById('attack-btn').disabled = false;
         document.getElementById('defend-btn').disabled = true;
-        document.getElementById('game-results').textContent = `Coin is ${result}. You chose ${selectedOption}! `;
-    } else {
-        playerTurn = false;
-        document.getElementById('game-actions').style.display = 'block';
-        document.getElementById('attack-btn').disabled = false;
-        document.getElementById('defend-btn').disabled = false; 
-        document.getElementById('game-results').textContent = `Coin is ${result}. You chose ${selectedOption}.`;
+        document.getElementById('game-results').innerHTML = `Coin is ${result}. You chose ${playerOption}! `;
+    }
+    else
+    {
+        document.getElementById('attack-btn').disabled = true;
+        document.getElementById('defend-btn').disabled = true;
+        document.getElementById('game-results').innerHTML = `Coin is ${result}. You chose ${playerOption}! `;
     }
 }
 
 function calculateDamage() {
-    return Math.floor(Math.random() * 5) + 1;
+    return Math.floor(Math.random() * 5) + 1; // damage for attack
 }
 
-/*function opponentAction() {
-    const isAttack = Math.random() < 0.5;
-    if (isAttack) {
-        const playerDamage = calculateDamage();
-        if (playerDamage === 0) {
-            document.getElementById('game-results').textContent = 'The opponent completely blocked the attack!';
-            return 'defend';
-        } else {
-            opponentHealth -= playerDamage;
-            document.getElementById('opponent-health').textContent = opponentHealth;
-            return 'attack';
-        }
-    } else {
-        return 'defend';
-    }
-    //return Math.random() < 0.5 ? 'attack' : 'defend';
-} */
+function opponentAction()
+{
+    var oppAD = Math.random();
 
-function opponentAction() {
-    var oppAttack = math.random();
-    var playerAttack = calculateDamage();
-
-    if (oppAttack == 0)
+    if (oppAD == 0)
     {
-        return 'defend';
+        opponentDefend();
     }
-    else
-    {
-        if (playerAttack == 0) {
-            document.getElementById('game-results').innerHTML = "The opponent completely blocked the attack!";
-            return 'defend';
-        }
+    else {
+        opponentAttack();
     }
 }
 
-function playerAttack(action) {
+function playerAction(action)
+{
+    if (action == 'attack') {
+        playerAttack();
+        document.getElementById('game-results').innerHTML = 'You will attack.';
+    }
+    else {
+        playerDefend();
+        document.getElementById('game-results').innerHTML = 'You will defend.';
+    }
 
+}
+
+function playerAttack()
+{
     document.getElementById('attack-btn').disabled = false;
     document.getElementById('defend-btn').disabled = false;
 
-    if (action === 'attack') {
-        document.getElementById('game-results').innerHTML = 'You will attack. You attack!';
+    if (action == 'attack') {
+        document.getElementById('game-results').innerHTML = 'You attack!';
         const damage = calculateDamage();
         opponentHealth -= damage;
         document.getElementById('opponent-health').innerHTML = opponentHealth;
         document.getElementById('game-results').innerHTML += ` You inflict ${damage} damage.`;
-    } else if (action === 'defend') {
-        document.getElementById('game-results').textContent = 'You defend!';
-        const damage = calculateDamage();
-        playerHealth -= damage;
-        document.getElementById('player-health').innerHTML = playerHealth;
-        document.getElementById('game-results').innerHTML += ` Opponent inflicts ${damage} damage.`;
     }
     checkHealth();
 }
 
-function playerDefend() {
-    let opponentDamage = 1; // Assume opponent always inflicts 1 damage when attacking
-
-    // Check if player successfully blocks opponent's attack
-    const playerBlocked = Math.random() < 0.5;
-
-    if (playerBlocked) {
-        document.getElementById('game-results').innerHTML = `You completely blocked the opponent.`;
-    } else {
-        // Check if opponent is also defending
-        const opponentDefending = Math.random() < 0.5;
-
-        if (opponentDefending) {
-            document.getElementById('game-results').innerHTML = `The opponent defended too.`;
-        }
-        else {
-            document.getElementById('game-results').innerHTML = `Opponent inflicts ${opponentDamage} damage.`;
-            playerHealth -= opponentDamage;
-            document.getElementById('player-health').innerHTML = playerHealth;
-        }
-    }
-
-    checkHealth();
-    isPlayerTurn = true;
+function playerDefend()
+{
     document.getElementById('attack-btn').disabled = false;
     document.getElementById('defend-btn').disabled = false;
+
+    if (opponentDefend())
+    {
+        document.getElementById('game-results').innerHTML += "The opponent defended too";
+    }
+    else {
+        document.getElementById('game-results').innerHTML += "You defended";
+    }
 }
-playerDefend();
+
+function opponentAttack()
+{
+    var odmg = calculateDamage();
+    document.getElementById('game-results').innerHTML = "Opponent inflicts ${odmg} damage";
+    if (odmg <=3)
+    {
+        document.getElementById('game-results').innerHTML = "You have completely blocked the opponent";
+    }
+    else if (action == 'attack')
+    {
+        document.getElementById('game-results').innerHTML = "You both attack each other";
+        playerHealth -= odmg;
+    }
+}
+
+function opponentDefend ()
+{
+    var pdmg = calculateDamage();
+    if (pdmg <=3)
+    {
+        document.getElementById('game-results').innerHTML = "Opponent complete blocked the attack!";
+    }
+}
 
 function checkHealth() {
     var dmg = calculateDamage();
